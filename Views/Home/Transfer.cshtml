@@ -1,0 +1,292 @@
+﻿@model HomeBankingV1._0.ViewModels.MainPageViewModel
+@{
+    ViewBag.Title = "Transfer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .acc {
+        margin-top: 37px;
+        margin-bottom: 37px;
+        background: #ffffff;
+        border-radius: 13px;
+        padding: 16px;
+        cursor: pointer;
+    }
+
+    .accTransfer {
+        border: 1px solid lightgrey;
+        padding: 11px;
+        border-radius: 4px;
+        margin-top: 20px;
+        cursor:pointer;
+    }
+
+        .accTransfer:hover {
+            box-shadow: 11px 3px 19px grey;
+        }
+</style>
+<div class="container-fluid" style="background: rgb(5,102,160);
+background: linear-gradient(90deg, rgba(5,102,160,1) 52%, rgba(0,212,255,1) 100%);padding: 44px;color: white;">
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <td>
+                        <img src="~/Assets/clock.png" style="width:50px;height:50px;" alt="image" />
+                    </td>
+                    <td>&nbsp;</td>
+                    <td><h5>Welcome Back, @Model.user.name !<p>@DateTime.Now.Month/@DateTime.Now.Day/@DateTime.Now.Year</p></h5></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <h6>@Model.accounts[0].name</h6>
+            <h1>$ @Model.accounts[0].balance</h1>
+        </div>
+        <div class="col-md-3">
+            <h6>@Model.accounts[2].name</h6>
+            <h1>$ @Model.accounts[2].balance</h1>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top:37px;">
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> Funds has been transfered.
+    </div>
+
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Invalid !</strong> Please Provide Valid Data.
+    </div>
+    <h2>New Transfer</h2>
+
+    <div class="row acc" style="cursor:default;">
+        <div class="col-md-4 container">
+            <h6>1. Choose a origin account</h6>
+            @foreach (var account in Model.accounts)
+            {
+                <div class="row accTransfer" id="origin_@account.aid" onclick="selectAccountOrigin(@account.aid)">
+                    <div class="col-md-12">
+                        <h6 style="color:dodgerblue;">@account.name</h6>
+                        <p>@account.ano</p>
+                        <p style="float:right;">$ @account.balance</p>
+                    </div>
+                </div>
+            }
+            @*<div class="row accTransfer" id="orgin_div">
+                    <div class="col-md-12">
+                        <h6 style="color:dodgerblue;">Account Tilte</h6>
+                        <p>2344 2343 5465 6544</p>
+                        <p style="float:right;">$ 17,420.00</p>
+                    </div>
+                </div>
+                <div class="row accTransfer" id="orgin_div">
+                    <div class="col-md-12">
+                        <h6 style="color:dodgerblue;">Account Tilte</h6>
+                        <p>2344 2343 5465 6544</p>
+                        <p style="float:right;">$ 17,420.00</p>
+                    </div>
+                </div>*@
+            <a id="origin_swtacc" class="swtacc" style="color:dodgerblue;display:none;">< Switch account</a>
+        </div>
+
+        <div class="col-md-4 container custCard" style="left:5px;">
+            <h6>2. Choose a destination account</h6>
+            @foreach (var account in Model.accounts)
+            {
+                <div class="row accTransfer" id="dest_@account.aid" onclick="selectAccountDest(@account.aid)">
+                    <div class="col-md-12">
+                        <h6 style="color:dodgerblue;">@account.name</h6>
+                        <p>@account.ano</p>
+                        <p style="float:right;">$@account.balance</p>
+                    </div>
+                </div>
+            }
+            @*<div class="row accTransfer" id="dest_div">
+                    <div class="col-md-12">
+                        <h6 style="color:dodgerblue;">Account Tilte</h6>
+                        <p>2344 2343 5465 6544</p>
+                        <p style="float:right;">$ 17,420.00</p>
+                    </div>
+                </div>*@
+            <a id="dest_swtacc" class="swtacc" style="cursor:pointer;color:dodgerblue;display:none;">< Switch account</a>
+        </div>
+
+        <div class="col-md-4 container custCard" style="left:10px;" id="transfer">
+            <h6>3. Transfer Data</h6>
+            <table class="table table-borderless">
+                <tr>
+                    <td><p>Amount</p><input type="text" id="amount" placeholder="$" class="form-control" /></td>
+                </tr>
+                <tr>
+                    <td><span>Immediate </span><input checked name="transType" type="radio" onclick="hideDate()" /></td>
+                    <td><span>Date </span><input name="transType" type="radio" onclick="showDate()" /></td>
+                </tr>
+                <tr>
+                    <td><input type="date" class="form-control" id="date" /></td>
+                </tr>
+                <tr>
+                    <td><p>Concept</p><input id="concept" type="text" placeholder="" class="form-control" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="transBtn" onclick="saveDetails()" class="btn btn-primary btn-block" style=" background: #4696e7;border: none;color: white;border-radius: 18px;width:150px; margin-left:auto;">Make Transfer</button>
+                    </td>
+                </tr>
+            </table>
+            <a id="dest_swtacc" class="swtacc" style="cursor:pointer;color:dodgerblue;display:none;">< Switch account</a>
+        </div>
+
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    let json = {
+        id:0,
+        originate: '',
+        destination:'',
+        recivername: 'Umer',
+        date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 00:00:00`,
+        import: '',
+        concept:''
+    };
+
+    var currentlyClicked = 0;
+    $(document).ready(() => {
+        $("#date").hide();
+        $('.alert-success').hide();
+
+        $('.alert-danger').hide();
+
+        $('#transfer').css({
+            opacity: 0.5,
+            pointerEvents: 'none'
+        })
+        $("div[id^='dest_']").css({
+            opacity: 0.5,
+            pointerEvents: 'none'
+        })
+
+        $("#origin_swtacc").click(() => {
+            $("#origin_swtacc").hide();
+            $("div[id^='origin_']").show();
+
+        })
+
+
+        
+        $("#dest_swtacc").click(() => {
+            $("#dest_swtacc").hide();
+            $("div[id^='dest_']").not("#dest_" + currentlyClicked).show();
+
+        })
+       
+
+
+    })
+
+    
+    const selectAccountOrigin = (id) => {
+        json.originate = id+"";
+        //console.log(id);
+        $("div[id^='origin_']").not("#origin_" + id).hide();
+        $("#origin_swtacc").show();
+        $("div[id^='dest_']").css({
+            opacity: 1,
+            pointerEvents: ''
+        })
+        currentlyClicked = id;
+        $("div[id^='dest_']").show();
+        $("#dest_" + id).hide();
+        
+        //$('#' + id).show();
+    }
+
+    const selectAccountDest = (id) => {
+        json.destination = id+"";
+        console.log(id);
+        $("div[id^='dest_']").not("#dest_" + id).hide();
+        $("#dest_swtacc").show();
+        $("#transfer").css({
+            opacity: 1,
+            pointerEvents: ''
+        })
+        currentlyClicked = id;
+
+        
+        
+        //$('#' + id).show();
+    }
+
+
+    const saveDetails = () => {
+        var radios = document.getElementsByName('transType');
+
+        if (radios[1].checked) {
+            json.date = $("#date").val();
+        }
+
+        json.concept = $("#concept").val();
+        json.import = $("#amount").val();
+
+
+        //console.log(JSON.stringify(json));
+        //fetch("https://localhost:44347/Home/SaveAccountDetails",{
+        //    body: JSON.stringify(json),
+        //    method:"POST"
+
+        //}).then(res => {
+        //    if (res.ok) {
+        //        alert("Suucess");
+        //    }
+        //});
+
+        if (json.concept === '' || json.import === '') {
+            $(".alert-danger").show();
+        } else {
+            
+        $("#transBtn").html("Transfering....");
+        $("#transBtn").attr("disabled", true);
+            $.ajax({
+            url: "https://localhost:44347/Home/SaveAccountDetails",
+            method: "POST",
+            data: json,
+            dataType:"json",
+            success: (response) => {
+                $("#transBtn").html("Make Transfer");
+        $("#transBtn").attr("disabled", false);
+               // console.log(response);
+                $('.alert-success').show();
+            }
+        })
+        }
+
+
+    }
+
+
+    const showDate = () => {
+
+        $("#date").show();
+        
+    }
+
+    
+    const hideDate = () => {
+
+        $("#date").hide();
+        
+    }
+
+    
+</script>
+

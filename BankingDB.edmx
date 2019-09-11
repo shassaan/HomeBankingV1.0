@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bankingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accountDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="concept" Type="varchar" MaxLength="200" />
+          <Property Name="import" Type="float" />
+          <Property Name="balance" Type="float" />
+          <Property Name="originate" Type="varchar" MaxLength="200" />
+          <Property Name="destination" Type="varchar" MaxLength="200" />
+          <Property Name="recivername" Type="varchar" MaxLength="200" />
+          <Property Name="aid" Type="int" />
+          <Property Name="transType" Type="bit" />
+        </EntityType>
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="aid" />
+          </Key>
+          <Property Name="aid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" />
+          <Property Name="ano" Type="varchar" MaxLength="200" />
+          <Property Name="balance" Type="float" />
+          <Property Name="available" Type="float" />
+          <Property Name="uid" Type="int" />
+        </EntityType>
+        <EntityType Name="deposits">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_id" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="concept" Type="varchar" MaxLength="200" />
+          <Property Name="amount" Type="float" />
+        </EntityType>
+        <EntityType Name="expenses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="name" Type="varchar" MaxLength="200" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="amount" Type="float" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" />
+          <Property Name="city" Type="varchar" MaxLength="200" />
+          <Property Name="country" Type="varchar" MaxLength="200" />
+          <Property Name="picture" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK__accountDeta__aid__15502E78">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="accountDetails" Type="Self.accountDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="aid" />
+            </Principal>
+            <Dependent Role="accountDetails">
+              <PropertyRef Name="aid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__accounts__uid__1273C1CD">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="accounts" Type="Self.accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__deposits__u_id__182C9B23">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="deposits" Type="Self.deposits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="deposits">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bankingModelStoreContainer">
+          <EntitySet Name="accountDetails" EntityType="Self.accountDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="deposits" EntityType="Self.deposits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expenses" EntityType="Self.expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__accountDeta__aid__15502E78" Association="Self.FK__accountDeta__aid__15502E78">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="accountDetails" EntitySet="accountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__accounts__uid__1273C1CD" Association="Self.FK__accounts__uid__1273C1CD">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__deposits__u_id__182C9B23" Association="Self.FK__deposits__u_id__182C9B23">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="deposits" EntitySet="deposits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bankingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="accountDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="concept" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="import" Type="Double" />
+          <Property Name="balance" Type="Double" />
+          <Property Name="originate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="destination" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="recivername" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="aid" Type="Int32" />
+          <NavigationProperty Name="account" Relationship="Self.FK__accountDeta__aid__15502E78" FromRole="accountDetails" ToRole="accounts" />
+          <Property Name="transType" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="aid" />
+          </Key>
+          <Property Name="aid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ano" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="balance" Type="Double" />
+          <Property Name="available" Type="Double" />
+          <Property Name="uid" Type="Int32" />
+          <NavigationProperty Name="accountDetails" Relationship="Self.FK__accountDeta__aid__15502E78" FromRole="accounts" ToRole="accountDetails" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__accounts__uid__1273C1CD" FromRole="accounts" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="deposit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_id" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="concept" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Double" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__deposits__u_id__182C9B23" FromRole="deposits" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="expens">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Double" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="accounts" Relationship="Self.FK__accounts__uid__1273C1CD" FromRole="USER" ToRole="accounts" />
+          <NavigationProperty Name="deposits" Relationship="Self.FK__deposits__u_id__182C9B23" FromRole="USER" ToRole="deposits" />
+        </EntityType>
+        <Association Name="FK__accountDeta__aid__15502E78">
+          <End Role="accounts" Type="Self.account" Multiplicity="0..1" />
+          <End Role="accountDetails" Type="Self.accountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="aid" />
+            </Principal>
+            <Dependent Role="accountDetails">
+              <PropertyRef Name="aid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__accounts__uid__1273C1CD">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="accounts" Type="Self.account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__deposits__u_id__182C9B23">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="deposits" Type="Self.deposit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="deposits">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bankingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accountDetails" EntityType="Self.accountDetail" />
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="deposits" EntityType="Self.deposit" />
+          <EntitySet Name="expenses" EntityType="Self.expens" />
+          <EntitySet Name="USERs" EntityType="Self.USER" />
+          <AssociationSet Name="FK__accountDeta__aid__15502E78" Association="Self.FK__accountDeta__aid__15502E78">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="accountDetails" EntitySet="accountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__accounts__uid__1273C1CD" Association="Self.FK__accounts__uid__1273C1CD">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__deposits__u_id__182C9B23" Association="Self.FK__deposits__u_id__182C9B23">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="deposits" EntitySet="deposits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bankingModelStoreContainer" CdmEntityContainer="bankingEntities">
+          <EntitySetMapping Name="accountDetails">
+            <EntityTypeMapping TypeName="bankingModel.accountDetail">
+              <MappingFragment StoreEntitySet="accountDetails">
+                <ScalarProperty Name="transType" ColumnName="transType" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="concept" ColumnName="concept" />
+                <ScalarProperty Name="import" ColumnName="import" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="originate" ColumnName="originate" />
+                <ScalarProperty Name="destination" ColumnName="destination" />
+                <ScalarProperty Name="recivername" ColumnName="recivername" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="bankingModel.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ano" ColumnName="ano" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="available" ColumnName="available" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="deposits">
+            <EntityTypeMapping TypeName="bankingModel.deposit">
+              <MappingFragment StoreEntitySet="deposits">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="concept" ColumnName="concept" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expenses">
+            <EntityTypeMapping TypeName="bankingModel.expens">
+              <MappingFragment StoreEntitySet="expenses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="bankingModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

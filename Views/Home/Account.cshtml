@@ -1,0 +1,209 @@
+﻿@model HomeBankingV1._0.ViewModels.MainPageViewModel
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .acc {
+        margin-top: 37px;
+        margin-bottom: 37px;
+        background: #ffffff;
+        border-radius: 13px;
+        padding: 16px;
+    }
+
+    .custombtn {
+        border: 1px solid lightgrey;
+        border-radius: 6px;
+        padding: 8px;
+        text-align: center;
+        width: inherit;
+        cursor: pointer;
+    }
+
+        .custombtn:hover {
+            background: #5bc0de;
+            color: white;
+        }
+</style>
+<div class="container-fluid" style="background: rgb(5,102,160);
+background: linear-gradient(90deg, rgba(5,102,160,1) 52%, rgba(0,212,255,1) 100%);padding: 44px;color: white;">
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <td>
+                        <img src="~/Assets/clock.png" style="width:50px;height:50px;" alt="image" />
+                    </td>
+                    <td>&nbsp;</td>
+                    <td><h5>Welcome Back, @Model.user.name !<p>@DateTime.Now.Month/@DateTime.Now.Day/@DateTime.Now.Year</p></h5></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <h6>@Model.accounts[0].name</h6>
+            <h1>$ @Model.accounts[0].balance</h1>
+        </div>
+        <div class="col-md-3">
+            <h6>@Model.accounts[2].name</h6>
+            <h1>$ @Model.accounts[2].balance</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="margin-top:37px;">
+        <div class="col-sm-6">
+            <h4>My Accounts</h4>
+        </div>
+
+        <div class="col-sm-6">
+            <a href="/Home/Transfer/" class="btn btn-primary btn-block" style="background: #4696e7;border: none;color: white;border-radius: 18px;width:150px; margin-left:auto;">New Transfer</a>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-12">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="margin-right:100px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Select Transaction Type
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/Home/GetAccounDetailsOf?type=Income&id=@Model.account.aid" id="Income">Income</a>
+                        <a class="dropdown-item" href="/Home/GetAccounDetailsOf?type=Expense&id=@Model.account.aid" id="Expense">Expenses</a>
+                        <a class="dropdown-item" href="/Home/GetAccounDetailsOf?type=All&id=@Model.account.aid" id="All">All Transactions</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row acc">
+        <div class="col-sm-6">
+            <p id="accTitle">@Model.account.name</p>
+            <p>@Model.account.ano</p>
+        </div>
+
+        <div class="col-sm-3">
+            <h4>Balance</h4>
+            <h5>$@Model.account.balance</h5>
+        </div>
+
+        <div class="col-sm-3">
+            <h4>Available</h4>
+            <h5>$@Model.account.available</h5>
+        </div>
+    </div>
+
+    <div class="row acc" style="margin-bottom:0px;">
+        <div class="col-md-12">
+            <table class="table table-responsive" style="display:inline-table;">
+                <tr style="color:dodgerblue;">
+                    <td>Date</td>
+                    <td>Concept</td>
+                    <td>Import</td>
+                    <td>Balance</td>
+                    <td></td>
+                </tr>
+                
+                <tbody>
+                    @{bool divNeeded = false;}
+                    @foreach (var item in Model.accountDetails)
+                    {
+                        if (divNeeded)
+                        {
+                            <div></div>
+                        }
+
+                        <tr>
+                            <td>@item.date.Value.Month/@item.date.Value.Day/@item.date.Value.Year</td>
+                            <td>@item.concept</td>
+                            <td>
+                                @if (item.transType == false)
+                                {<span style="color:red;">-$@item.import</span>}
+                            else
+                            { <span style="color:green;">+$@item.import</span>}
+                        </td>
+                        <td>$@item.balance</td>
+                        <td><img onclick="toggleDiv()" style="cursor:pointer;" src="~/Assets/caret-down.png" width="25" height="25" id="@item.id" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <div style="background:#f5fbfd;" class="container-fluid" id="account_@item.id">
+                                <h1>Transfer Details:</h1>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Origin Account: <span>@item.originate</span></h6>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h6>Destination Account: <span>@item.destination</span></h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Concept: <span>@item.concept</span></h6>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h6>Date: <span>@item.date.Value.Month/@item.date.Value.Day/@item.date.Value.Year</span></h6>
+                                    </div>
+                                </div>
+                               
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Reciever: <span>@item.recivername</span></h6>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h6>
+                                            Import: @if (item.transType == false)
+                                            {<span style="color:red;">-$@item.import</span>}
+                                        else
+                                        {<span style="color:green;">+$@item.import</span>}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    }
+</tbody>
+            </table>
+        </div>
+    </div>
+    @*<div class="row">
+        <div class="col-md-12">
+            <a class="btn-block custombtn">Show More</a>
+        </div>
+    </div>*@
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $("div[id^='account_']").hide();
+    });
+
+
+    const toggleDiv = () => {
+        let ac = $("#" + this.event.target.id).attr("src");
+        console.log(ac);
+        if (ac == "/Assets/caret-arrow-up.png") {
+            $("#" + this.event.target.id).attr("src","/Assets/caret-down.png");
+        } else if (ac == "/Assets/caret-down.png") {
+            $("#" + this.event.target.id).attr("src","/Assets/caret-arrow-up.png");
+        }
+        $("#account_" + this.event.target.id).slideToggle();
+    }
+
+
+     
+</script>
+

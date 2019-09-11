@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bankingModelStoreContainer" CdmEntityContainer="bankingEntities">
+    <EntitySetMapping Name="accountDetails">
+      <EntityTypeMapping TypeName="bankingModel.accountDetail">
+        <MappingFragment StoreEntitySet="accountDetails">
+          <ScalarProperty Name="transType" ColumnName="transType" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="concept" ColumnName="concept" />
+          <ScalarProperty Name="import" ColumnName="import" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="originate" ColumnName="originate" />
+          <ScalarProperty Name="destination" ColumnName="destination" />
+          <ScalarProperty Name="recivername" ColumnName="recivername" />
+          <ScalarProperty Name="aid" ColumnName="aid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="accounts">
+      <EntityTypeMapping TypeName="bankingModel.account">
+        <MappingFragment StoreEntitySet="accounts">
+          <ScalarProperty Name="aid" ColumnName="aid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ano" ColumnName="ano" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="available" ColumnName="available" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="deposits">
+      <EntityTypeMapping TypeName="bankingModel.deposit">
+        <MappingFragment StoreEntitySet="deposits">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="u_id" ColumnName="u_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="concept" ColumnName="concept" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="expenses">
+      <EntityTypeMapping TypeName="bankingModel.expens">
+        <MappingFragment StoreEntitySet="expenses">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERs">
+      <EntityTypeMapping TypeName="bankingModel.USER">
+        <MappingFragment StoreEntitySet="USER">
+          <ScalarProperty Name="uid" ColumnName="uid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,358 @@
+﻿@model HomeBankingV1._0.ViewModels.MainPageViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+
+}
+
+<style>
+    #accTitle {
+        color: #3880e0;
+    }
+
+    .acc {
+        margin-top: 37px;
+        margin-bottom: 37px;
+        background: #ffffff;
+        border-radius: 13px;
+        padding: 16px;
+        cursor: pointer;
+    }
+
+        .acc:hover {
+            box-shadow: 11px 3px 19px grey;
+            opacity: 0.3;
+        }
+
+    .accBottom {
+        margin-top: 37px;
+    }
+</style>
+<div class="container-fluid" style="background: rgb(5,102,160);
+background: linear-gradient(90deg, rgba(5,102,160,1) 52%, rgba(0,212,255,1) 100%);padding: 44px;color: white;">
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <td>
+                        <img src="~/Assets/clock.png" style="width:50px;height:50px;" alt="image" />
+                    </td>
+                    <td>&nbsp;</td>
+                    <td><h5>Welcome Back, @Model.user.name !<p>@DateTime.Now.Month/@DateTime.Now.Day/@DateTime.Now.Year</p></h5></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <h6>@Model.accounts[0].name</h6>
+            <h1>$ @Model.accounts[0].balance</h1>
+        </div>
+        <div class="col-md-3">
+            <h6>@Model.accounts[2].name</h6>
+            <h1>$ @Model.accounts[2].balance</h1>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top:100px;">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>My Accounts</h4>
+                </div>
+
+                <div class="col-sm-6">
+                    <a href="/Home/transfer" class="btn btn-primary btn-block" style="background: #4696e7;border: none;color: white;border-radius: 18px;width:150px; margin-left:auto;">New Transfer</a>
+                </div>
+            </div>
+            @foreach (var account in Model.accounts)
+            {
+                <a style="text-decoration:none;" href="/Home/Account?id=@account.aid">
+                    <div class="row acc">
+                        <div class="col-sm-6">
+                            <p id="accTitle">@account.name</p>
+                            <p>@account.ano</p>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h5>$ @account.balance</h5>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <p>Available</p>
+                            <p>$ @account.available</p>
+                        </div>
+                    </div>
+                </a>
+            }
+
+
+            @*<div class="row acc">
+                    <div class="col-sm-6">
+                        <p id="accTitle">Current Account</p>
+                        <p>1234 4232 8768 4566</p>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <h5>$ 17,420.00</h5>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <p>Available</p>
+                        <p>$ 6,396</p>
+                    </div>
+                </div>
+
+                <div class="row acc">
+                    <div class="col-sm-6">
+                        <p id="accTitle">Current Account</p>
+                        <p>1234 4232 8768 4566</p>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <h5>$ 17,420.00</h5>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <p>Available</p>
+                        <p>$ 6,396</p>
+                    </div>
+                </div>*@
+
+            <h4>Other Operations</h4>
+
+            <div class="row" style="background:white;border-radius:8px;padding:10px;">
+                <div class="col-sm-12">
+                    <div class="row accBottom">
+                        <div class="col-sm-6" style="color:#3880e0;">
+                            My Deposits
+                        </div>
+
+                        <div class="col-sm-6" style="">
+                            <a href="#" style="color:black;margin-left: 316px;" id="toggler1">
+                                <img id="toggler1Image" src="~/Assets/add.png" style="width:25px;height:25px;" />
+                            </a>
+                        </div>
+                        <div class="row" style="display:none;" id="depositTable">
+                            <div class="col-sm-12">
+                                <table class="table table-responsive" style="display:inline-table;">
+                                    <tr style="color:dodgerblue;">
+                                        <th>Date</th>
+                                        <th>Concept</th>
+                                        <th>Amount</th>
+                                    </tr>
+
+                                    @foreach (var deposit in Model.deposits)
+                                    {
+                                        <tr>
+                                            <td style="color:dodgerblue;">@deposit.date.Value.Month/@deposit.date.Value.Day/@deposit.date.Value.Year</td>
+                                            <td>@deposit.concept</td>
+                                            <td style="color:#77CE05;">+$@deposit.amount</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row accBottom">
+                        <div class="col-sm-6" style="color:#3880e0;">
+                            Loans
+                        </div>
+
+                        <div class="col-sm-6" style="">
+                            <a href="#" style="color:black;    margin-left: 316px;" id="toggler2">
+                                <img src="~/Assets/add.png" style="width:25px;height:25px;" />
+                            </a>
+                        </div>
+                        <div class="row" style="display:none;" id="depositTableToggler2">
+                            <div class="col-sm-12">
+                                <table class="table">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Concept</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row accBottom">
+                        <div class="col-sm-6" style="color:#3880e0;">
+                            Credit Lines
+                        </div>
+
+                        <div class="col-sm-6" style="">
+                            <a href="#" style="color:black;    margin-left: 316px;" id="toggler3">
+                                <img src="~/Assets/add.png" style="width:25px;height:25px;" />
+                            </a>
+                        </div>
+                        <div class="row" style="display:none;" id="depositTableToggler3">
+                            <div class="col-sm-12">
+                                <table class="table">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Concept</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 mt-10" style="padding:35px;background: white;border-radius: 25px;text-align:center;/* padding: 10px; */left: 32px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img src="@Model.user.picture" class="img-circle" style="width:150px;border-radius:82px; height:150px;" alt="Alternate Text" />
+                        <h5>@Model.user.name</h5>
+                        <p>@Model.user.country,@Model.user.city</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>56</h5>
+                        <p class="text-muted">Operations</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5>+$@Model.deposits.Sum(a => a.amount)</h5>
+                        <p class="text-muted">Amount</p>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <h5>
+                        Expense Report
+                    </h5>
+                    <div id="curve_chart" style="width: 900px; height: 400px"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align:left;">
+                            Recent Activity
+                        </h5>
+                        <hr />
+
+                        <table class="table table-condensed">
+                            <tr>
+                                <td><p style="color:dodgerblue">@Model.espenses[0].date.Value.ToString("MMMM")</p></td>
+                            </tr>
+                            @foreach (var expense in Model.espenses)
+                            {
+                                <tr>
+                                    <td><p class="text-muted">@expense.date.Value.ToString("MMMM").ToUpper()</p><h6>@expense.date.Value.Day</h6></td>
+                                    <td><h6>@expense.name</h6><p class="text-muted">@expense.description</p></td>
+                                    <td><p class="text-danger">-$@expense.amount</p><p class="text-muted">10:48PM</p></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+
+        //var data = google.visualization.arrayToDataTable([
+        //    ['Day', 'Expenses'],
+        //    ['15 March', 400],
+        //    ['30 March', 460],
+        //    ['15 April', 1120],
+        //    ['30 April', 540]
+        //]);
+
+        let data = [];
+
+
+        fetch("https://localhost:44347/Home/GetExpenseReport?criteria=day")
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(d => {
+                        console.log(d);
+                        data = google.visualization.arrayToDataTable(d);
+                        var options = {
+                            title: 'Expenses',
+                            curveType: 'function',
+                            legend: { position: 'bottom' }
+                        };
+
+                        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                        chart.draw(data, options);
+                    })
+                }
+            });
+
+
+    }
+</script>
+
+<script type="text/javascript">
+    document.querySelector("#toggler1").addEventListener("click", e => {
+        e.preventDefault();
+        let el = document.querySelector("#toggler1");
+        console.log(el.childNodes[1].src);
+        $("#depositTable").slideToggle();
+        if (el.childNodes[1].src == "https://localhost:44347/Assets/substract.png") {
+            el.childNodes[1].src = "https://localhost:44347/Assets/add.png";
+        } else if (el.childNodes[1].src == "https://localhost:44347/Assets/add.png") {
+            el.childNodes[1].src = "https://localhost:44347/Assets/substract.png";
+        }
+        //el.childNodes[1].src = "/Assets/substract.png";
+        // console.log(el.childNodes);
+
+
+    });
+
+
+    document.querySelector("#toggler2").addEventListener("click", e => {
+        e.preventDefault();
+        let el = document.querySelector("#toggler2");
+        console.log(el.childNodes[1].src);
+        $("#depositTableToggler2").slideToggle();
+        if (el.childNodes[1].src == "https://localhost:44347/Assets/substract.png") {
+            el.childNodes[1].src = "https://localhost:44347/Assets/add.png";
+        } else if (el.childNodes[1].src == "https://localhost:44347/Assets/add.png") {
+            el.childNodes[1].src = "https://localhost:44347/Assets/substract.png";
+        }
+        //el.childNodes[1].src = "/Assets/substract.png";
+        // console.log(el.childNodes);
+
+
+    });
+
+    document.querySelector("#toggler3").addEventListener("click", e => {
+        e.preventDefault();
+        let el = document.querySelector("#toggler3");
+        console.log(el.childNodes[1].src);
+        $("#depositTableToggler3").slideToggle();
+        if (el.childNodes[1].src == "https://localhost:44347/Assets/substract.png") {
+            el.childNodes[1].src = "https://localhost:44347/Assets/add.png";
+        } else if (el.childNodes[1].src == "https://localhost:44347/Assets/add.png") {
+            el.childNodes[1].src = "https://localhost:44347/Assets/substract.png";
+        }
+        //el.childNodes[1].src = "/Assets/substract.png";
+        // console.log(el.childNodes);
+
+
+    });
+</script>
