@@ -28,8 +28,6 @@ namespace HomeBankingV1._0.Controllers
             return View(mainPageViewModel);
         }
 
-
-
         public ActionResult GetExpenseReport(string criteria)
         {
             ArrayList mainrray = new ArrayList();
@@ -52,7 +50,6 @@ namespace HomeBankingV1._0.Controllers
 
             return Json(mainrray,JsonRequestBehavior.AllowGet);
         }
-
 
         public ActionResult Transfer()
         {
@@ -101,7 +98,6 @@ namespace HomeBankingV1._0.Controllers
             return Json("");
         } 
 
-
         public ActionResult GetAccounDetailsOf(string type,int id)
         {
             if (type.Equals("Income"))
@@ -133,7 +129,6 @@ namespace HomeBankingV1._0.Controllers
             }
            
         }
-
 
         public ActionResult Account(int id)
         {

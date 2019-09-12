@@ -171,6 +171,7 @@
     <Content Include="Assets\caret-down.png" />
     <Content Include="Assets\clock.png" />
     <Content Include="Assets\Eclipse-1s-21px.gif" />
+    <Content Include="Assets\investment_money_lightblue-512.png" />
     <Content Include="Assets\substract.png" />
     <Content Include="BankingDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
